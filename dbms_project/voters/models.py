@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.hashers import check_password
 
 class Constituencies(models.Model):
     Constituency_ID = models.AutoField(primary_key=True)
@@ -19,7 +20,7 @@ class Candidates(models.Model):
     Candidate_ID = models.AutoField(primary_key=True)
     Candidate_Name = models.CharField(max_length=255)
     Party_ID = models.ForeignKey(Parties, on_delete=models.SET_NULL, null=True)
-    Constituency_ID = models.ForeignKey(Constituencies, on_delete=models.SET_NULL, null=True)
+    Constituency_ID = models.ForeignKey(Constituencies, on_delete=models.CASCADE)
     Election_Year = models.IntegerField()
     Candidate_Description = models.TextField()
 
@@ -35,6 +36,14 @@ class Admins(models.Model):
     Email = models.EmailField(max_length=255)
     Role = models.CharField(max_length=20, choices=(('Superadmin', 'Superadmin'), ('Supervisor', 'Supervisor')))
 
+
+    def authenticate_admin(username, password):
+        try:
+            admin = Admins.objects.get(Username=username)
+            if admin.Password == password:
+                return admin
+        except Admins.DoesNotExist:
+            return None
     class Meta:
         db_table = 'Admins'
 
@@ -63,14 +72,21 @@ class Voters(models.Model):
     Registration_Date = models.DateTimeField()
     Last_Login = models.DateTimeField(null=True)
     Verified = models.CharField(max_length=3, choices=(('Yes', 'Yes'), ('No', 'No')), default='No')
-    # Verified_By = models.CharField(max_length=255)
-    #Verified_By = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
+    Verified_By = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         db_table = 'Voters'
 
     def __str__(self):
         return self.Username
+    
+    def authenticate_voter(username, password):
+        try:
+            voter = Voters.objects.get(Username=username)
+            if voter.Password == password:
+                return voter
+        except Voters.DoesNotExist:
+            return None
 
 class Voter_Details(models.Model):
     Voter_Detail_ID = models.AutoField(primary_key=True)

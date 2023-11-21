@@ -3,7 +3,8 @@ from django.shortcuts import render , redirect
 from django.utils import timezone
 from .forms import RegistrationForm
 from .models import *
-import time
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 def register(request):
     print("Received request")
@@ -40,3 +41,27 @@ def register(request):
         form = RegistrationForm()
 
     return render(request, 'register.html', {'form': form})
+
+
+def login_page(request):
+    if request.method== "POST":
+        Username = request.POST.get('Username')
+        Password =request.POST.get('Password')
+
+        if not Voters.objects.filter(Username =Username).exists():
+            messages.error(request ,"Username doesn't exist")
+            print("Username not exits")
+            return redirect('/login/')
+        
+        user = Voters.authenticate_voter(Username, Password)
+        if user is None :
+            messages.error(request , "Invalid credentials")
+            return redirect('/register/')
+        
+ 
+        else:
+            print("Hello") ; 
+            return redirect('/home.html/')
+            
+        
+    return render(request , 'login.html') 
