@@ -64,7 +64,7 @@ class Voters(models.Model):
     Last_Login = models.DateTimeField(null=True)
     Verified = models.CharField(max_length=3, choices=(('Yes', 'Yes'), ('No', 'No')), default='No')
     # Verified_By = models.CharField(max_length=255)
-    Verified_By = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
+    #Verified_By = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         db_table = 'Voters'

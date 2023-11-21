@@ -1,5 +1,5 @@
 # myapp/views.py
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.utils import timezone
 from .forms import RegistrationForm
 from .models import *
@@ -15,7 +15,6 @@ def register(request):
             email = form.cleaned_data['Email']
             username = form.cleaned_data['Username']
             password = form.cleaned_data['Password']
-            form.save()
             print("Saved form")
             # Save to Voters table
             new_voter = Voters.objects.create(
@@ -31,7 +30,8 @@ def register(request):
             print("Created new user")
             # Perform any additional actions if needed
             # Redirect or render success page
-            return render(request, 'registration_success.html')
+            #return render(request, 'registration_success.html')
+            return redirect('/register')
         else:
             print("Form is invalid")
             print(form.errors)
