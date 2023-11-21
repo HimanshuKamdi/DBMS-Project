@@ -12,9 +12,9 @@ def register(request):
         print("Received POST request")
         if form.is_valid():
             print("Form is valid")
-            email = form.cleaned_data['email']
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            email = form.cleaned_data['Email']
+            username = form.cleaned_data['Username']
+            password = form.cleaned_data['Password']
             form.save()
             print("Saved form")
             # Save to Voters table
@@ -24,8 +24,8 @@ def register(request):
                 Email=email,
                 Registration_Date=timezone.now(), 
                 Last_Login=timezone.now(),
-                Verified='No',
-                Verified_By=None
+                Verified='No'
+                # Verified_By=None
             )
             new_voter.save()
             print("Created new user")
@@ -34,6 +34,7 @@ def register(request):
             return render(request, 'registration_success.html')
         else:
             print("Form is invalid")
+            print(form.errors)
     else:
         print("Received GET request")
         form = RegistrationForm()
