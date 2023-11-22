@@ -108,14 +108,21 @@ def admin_page(request):
     list_of_supervisors = []
 
     for supervisor in supervisors:
+        supervisor_id = supervisor.Admin_ID.Admin_ID  
         supervisor_name = supervisor.Admin_ID.First_Name + ' ' + supervisor.Admin_ID.Last_Name
         constituency_name = supervisor.Constituency_ID.Constituency_Name 
-        list_of_supervisors.append((supervisor_name, constituency_name))
+        list_of_supervisors.append((supervisor_id,supervisor_name, constituency_name))
+    #temp = Voters.objects.filter(Verified = "No")
+    #c_id = []
+    #for voter in temp:
+        #c_id.append(voter.Voter_ID) 
 
+    #voters = Voter_Details.objects.filter(Voters.Voter_ID  in c_id)
     voters = Voter_Details.objects.all()
     voters_list = []
     # constituency_name = Voter_Details.objects.select_related('Constituency_ID').all()
     for voter in voters:
+        voter_id = voter.Voter_Card_Number
         voter_firstname = voter.First_Name
         voter_lasttname = voter.Last_Name
         voter_dob = voter.Date_of_Birth
@@ -159,3 +166,29 @@ def login_page_admin(request):
             
         
     return render(request , 'login.html') 
+
+
+def delete_supervisor(request , supervisor_id):
+    print(supervisor_id)     
+    temp = Supervisor.objects.get(Admin_ID = supervisor_id) 
+    temp.delete()
+
+    return redirect('/admin/')
+
+
+def approve_voter(request , voter_id):
+    temp = Voter_Details.objects.get(Voter_Card_Number = voter_id)
+    temp = Voters.objects.get(Voter_ID = temp.Voter_ID)
+    temp.Verified = "Yes" 
+    temp.save() 
+
+    return redirect('/admin/')
+
+def reject_voter(request , voter_id):
+    temp = Voter_Details.objects.get(Voter_Card_Number = voter_id)
+    number = temp.Voter_ID 
+    print(number) 
+    temp = Voters.objects.get(Username = number)
+    temp.delete()
+
+    return redirect('/admin/')
