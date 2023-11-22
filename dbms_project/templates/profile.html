@@ -13,11 +13,10 @@
 
 </head>
 <body>
-<div class="navbar">
-  
-</div>
+
 <div id="container">
-    <div class="supervisor_table">
+    {{details}}
+    {% comment %} <div class="supervisor_table">
         <h1>Supervisor</h1>
         <table>
             <thead>
@@ -30,15 +29,10 @@
             <tbody>
               {% for supervisor_data in list_of_supervisors %}
               <tr>
-                {% comment %} <td>{{ supervisor_data.0 }}</td> {% endcomment %}
+                <td>{{ supervisor_data.0 }}</td>
                 <td>{{ supervisor_data.1 }}</td>
-                <td>{{ supervisor_data.2 }}</td>
                 <td>
-                    <button class="reject">
-                      <a href="http://localhost:8000/delete/{{supervisor_data.0}}/">
-                        Remove
-                      </a>  
-                    </button>
+                    <button class="reject">Remove</button>
               </tr>
               {% endfor %}
             </tbody>
@@ -67,23 +61,14 @@
             <td>{{ voter_data.Contact_Number }}</td>
             <td>{{ voter_data.Constituency_Name }}</td>
             <td>
-                <button class="reject">
-                  <a href="http://localhost:8000/reject_voter/{{ voter_data.Voter_Card_Number}}">
-                    Reject
-                  </a>
-                </button>
-                <button class="approve">
-                  <a href="http://localhost:8000/approve_voter/{{ voter_data.Voter_Card_Number }}">
-                    Approve
-                  </a>
-                </button>
+                <button class="reject">Reject</button>
+                <button class="approve">Approve</button>
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
-    </div>
+    </div> {% endcomment %}
 </div>
-
 </body>
 </html>

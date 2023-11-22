@@ -55,23 +55,23 @@ def details(request , voter_id):
         Date_of_Birth = request.POST.get('DOB')
         city = request.POST.get('city')
         print(city) 
-        temp = Constituencies.objects.get(City = city)
-        c_id = temp.Constituency_ID  
+        temp = Constituencies.objects.get(City = city)  
+        temp_ID = Voters.objects.get(Voter_ID =  voter_id)
         new_voter_details = Voter_Details.objects.create(
-                Voter_ID = voter_id , 
+                Voter_ID = temp_ID , 
                 First_Name=First_Name,
                 Last_Name=Last_Name,
                 Contact_Number = Contact_Number ,
                 Address = Address ,
                 Date_of_Birth = Date_of_Birth ,
-                Constituency_ID = c_id ,
+                Constituency_ID = temp ,
                 Voter_Card_Number = random.randint(1000000000, 9999999999)
 
                 # Verified_By=None
             )
         new_voter_details.save() 
 
-        return redirect('/login/') 
+        return redirect('/') 
         
             
         
@@ -87,7 +87,7 @@ def login_page(request):
         if not Voters.objects.filter(Username =Username).exists():
             messages.error(request ,"Username doesn't exist")
             print("Username not exits")
-            return redirect('/login/')
+            return redirect('/')
         
         user = Voters.authenticate_voter(Username, Password) 
         if user is None :
@@ -97,7 +97,7 @@ def login_page(request):
  
         else:
             print("Hello") ; 
-            return redirect('/home.html/')
+            return redirect(f'/home/{user.Voter_ID}')
             
         
     return render(request , 'login.html') 
@@ -167,6 +167,10 @@ def login_page_admin(request):
         
     return render(request , 'login.html') 
 
+def profile_page(request,id):
+    details = Voter_Details.objects.filter(Voter_ID = id)    
+    return render(request,'profile.html',details )
+
 
 def delete_supervisor(request , supervisor_id):
     print(supervisor_id)     
@@ -178,7 +182,7 @@ def delete_supervisor(request , supervisor_id):
 
 def approve_voter(request , voter_id):
     temp = Voter_Details.objects.get(Voter_Card_Number = voter_id)
-    temp = Voters.objects.get(Voter_ID = temp.Voter_ID)
+    temp = Voters.objects.get(Voter_ID = temp.Voter_ID.Voter_ID)
     temp.Verified = "Yes" 
     temp.save() 
 
@@ -187,7 +191,13 @@ def approve_voter(request , voter_id):
 def reject_voter(request , voter_id):
     temp = Voter_Details.objects.get(Voter_Card_Number = voter_id)
     number = temp.Voter_ID 
-    temp = Voters.objects.get(Voter_ID = number)
+    temp = Voters.objects.get(Voter_ID = number.Voter_ID)
     temp.delete()
 
     return redirect('/admin/')
+
+
+def home(request, voter_id):
+    details = Voter_Details.objects.get(Voter_ID=voter_id)
+    context={"details":details}
+    return render(request , 'home.html' , context = context)
