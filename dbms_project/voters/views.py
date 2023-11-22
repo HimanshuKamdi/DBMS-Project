@@ -4,7 +4,6 @@ from django.utils import timezone
 from .forms import RegistrationForm
 from .models import *
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
 
 def register(request):
     print("Received request")
@@ -53,7 +52,7 @@ def login_page(request):
             print("Username not exits")
             return redirect('/login/')
         
-        user = Voters.authenticate_voter(Username, Password)
+        user = Voters.authenticate_voter(Username, Password) 
         if user is None :
             messages.error(request , "Invalid credentials")
             return redirect('/register/')
@@ -62,6 +61,31 @@ def login_page(request):
         else:
             print("Hello") ; 
             return redirect('/home.html/')
+            
+        
+    return render(request , 'login.html') 
+
+
+
+def login_page_admin(request):
+    if request.method== "POST":
+        Username = request.POST.get('Username')
+        Password =request.POST.get('Password')
+
+        if not Admins.objects.filter(Username =Username).exists():
+            messages.error(request ,"Username doesn't exist")
+            print("Username not exits")
+            return redirect('/login/')
+        
+        admin = Admins.authenticate_voter(Username, Password) 
+        if admin is None :  
+            messages.error(request , "Invalid credentials")
+            return redirect('/register/')
+        
+ 
+        else:
+            print("Hello") ; 
+            return redirect('/admin_home.html/')
             
         
     return render(request , 'login.html') 
