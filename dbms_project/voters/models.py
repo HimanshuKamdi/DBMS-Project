@@ -7,7 +7,10 @@ class Constituencies(models.Model):
     State = models.CharField(max_length=255)
 
     class Meta:
-        db_table = 'Constituencies'    
+        db_table = 'Constituencies'   
+
+    def __str__(self):
+        return self.Constituency_Name 
 
 class Parties(models.Model):
     Party_ID = models.AutoField(primary_key=True)
@@ -72,7 +75,7 @@ class Voters(models.Model):
     Registration_Date = models.DateTimeField()
     Last_Login = models.DateTimeField(null=True)
     Verified = models.CharField(max_length=3, choices=(('Yes', 'Yes'), ('No', 'No')), default='No')
-    Verified_By = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
+    # Verified_By = models.ForeignKey(Supervisor, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         db_table = 'Voters'

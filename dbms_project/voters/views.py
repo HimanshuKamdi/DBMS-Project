@@ -65,3 +65,37 @@ def login_page(request):
             
         
     return render(request , 'login.html') 
+
+def admin_page(request):
+    supervisors = Supervisor.objects.select_related('Admin_ID', 'Constituency_ID').all()
+
+    list_of_supervisors = []
+
+    for supervisor in supervisors:
+        supervisor_name = supervisor.Admin_ID.First_Name + ' ' + supervisor.Admin_ID.Last_Name
+        constituency_name = supervisor.Constituency_ID.Constituency_Name 
+        list_of_supervisors.append((supervisor_name, constituency_name))
+
+    voters = Voter_Details.objects.all()
+    voters_list = []
+    # constituency_name = Voter_Details.objects.select_related('Constituency_ID').all()
+    for voter in voters:
+        voter_firstname = voter.First_Name
+        voter_lasttname = voter.Last_Name
+        voter_dob = voter.Date_of_Birth
+        voter_contact = voter.Contact_Number
+        voter_voter_number = voter.Voter_Card_Number
+        constituency_name = voter.Constituency_ID.Constituency_Name
+        details = {
+            "First_Name":voter_firstname,
+            "Last_Name":voter_lasttname,
+            "Date_of_Birth":voter_dob,
+            "Contact_Number":voter_contact,
+            "Voter_Card_Number":voter_voter_number,
+            "Constituency_Name":constituency_name            
+        }
+        voters_list.append(details)
+    
+    context = {'list_of_supervisors': list_of_supervisors, 'voters_list': voters_list}  
+
+    return render(request,'admin.html',context)

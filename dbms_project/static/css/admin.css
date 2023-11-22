@@ -1,0 +1,42 @@
+body {
+    /* background-image: url("./bkg.jpg");
+    background-size: cover ;
+    background-position: center;
+    background-repeat: no-repeat; */  
+  }
+
+  #container {
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .reject{
+    padding: 10px;
+    background-color: #ff0000;
+    border-radius: 5px;
+    border: none;
+  }
+
+  .approve{
+    padding: 10px;
+    background-color: 	#7CFC00;
+    border-radius: 5px;
+    border: none;
+  }
