@@ -159,3 +159,8 @@ def login_page_admin(request):
             
         
     return render(request , 'login.html') 
+
+def profile_page(request,id):
+    details = Voter_Details.objects.filter(Voter_ID = id)    
+    return render(request,'profile.html',details )
+
