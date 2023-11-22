@@ -5,7 +5,7 @@ from .forms import RegistrationForm
 from .models import *
 from django.contrib import messages
 import random 
-import datetime
+from datetime import datetime 
 
 def register(request):
     print("Received request")
@@ -142,15 +142,17 @@ def admin_page(request):
     candidates = Candidates.objects.all()
     candidates_list = []
     for candidate in candidates:
+        id = candidate.Candidate_ID 
         name = candidate.Candidate_Name
         party_id = candidate.Party_ID
         party = Parties.objects.get(Party_ID = party_id.Party_ID)
         party_name = party.Party_Name
-        # constituency_id = Constituencies.objects.get(Constituency_ID = candidate.Constituency_ID)
-        constituency_name= candidate
+        constituency= Constituencies.objects.get(Constituency_Name = candidate.Constituency_ID)
+        constituency_name= constituency.Constituency_Name 
         election_year = candidate.Election_Year
         description = candidate.Candidate_Description
         details= {
+            "id": id ,
             "name": name,
             "party_name": party_name,
             "constituency_name": constituency_name,
@@ -298,3 +300,17 @@ def add_candidate(request):
         new_candidate_details.save() 
         return redirect('/admin')
     return render(request,'add_candidate.html')
+
+
+def reject_candidate(request , voter_id):
+    temp =  Candidates.objects.get(Candidate_ID = voter_id)
+    temp.delete()
+
+    return redirect('/admin/')
+
+
+def reject_supervisor(request , voter_id):
+    temp = Supervisor.objects.get(Admin_ID = voter_id) 
+    temp.delete()
+
+    return redirect('/admin')
