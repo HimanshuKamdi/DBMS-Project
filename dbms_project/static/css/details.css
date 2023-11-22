@@ -5,7 +5,7 @@
 }
 
 body {
-  background-image: url("../images/bkg.png");
+  background-image: url("../images/background.png");
   background-size: cover ;
   background-position: top;
   background-repeat: no-repeat;
@@ -36,11 +36,12 @@ body {
   overflow: hidden;
   position: relative;
   border-radius: 5px;
+  margin-top: 100px;
 }
 #inputContainer .infoContainer {
   padding: 45px 30px;
   box-sizing: border-box;
-  width: 400px;
+  width: 600px;
   margin-left: -400px;
   overflow: hidden;
   height: 0;
@@ -116,7 +117,7 @@ form h1.loadIn {
       -ms-user-select: none;
           user-select: none;
 }
-.formContainer input[type=password], .formContainer input[type=email], .formContainer input[type=text] {
+.formContainer input[type=password], .formContainer input[type=email], .formContainer input[type=text],.formContainer input[type=tel],.formContainer input[type=date],.formContainer input[type=date] {
   background: transparent;
   border: none;
   box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.15);
@@ -125,7 +126,7 @@ form h1.loadIn {
   color: #fff;
   width: 100%;
 }
-.formContainer input[type=password]:focus, .formContainer input[type=email]:focus, .formContainer input[type=text]:focus {
+.formContainer input[type=password]:focus, .formContainer input[type=email]:focus {
   box-shadow: inset 0 -2px 0 #fff;
 }
 

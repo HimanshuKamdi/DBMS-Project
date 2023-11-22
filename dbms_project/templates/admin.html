@@ -13,7 +13,9 @@
 
 </head>
 <body>
-
+<div class="navbar">
+  
+</div>
 <div id="container">
     <div class="supervisor_table">
         <h1>Supervisor</h1>
@@ -28,7 +30,7 @@
             <tbody>
               {% for supervisor_data in list_of_supervisors %}
               <tr>
-                <td>{{ supervisor_data.0 }}</td>
+                {% comment %} <td>{{ supervisor_data.0 }}</td> {% endcomment %}
                 <td>{{ supervisor_data.1 }}</td>
                 <td>{{ supervisor_data.2 }}</td>
                 <td>

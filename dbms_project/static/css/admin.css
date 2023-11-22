@@ -1,8 +1,9 @@
 body {
-    /* background-image: url("./bkg.jpg");
+     background-image: url("./new-bg.png"); 
     background-size: cover ;
     background-position: center;
-    background-repeat: no-repeat; */  
+    background-repeat: no-repeat; 
+    
   }
 
   #container {
@@ -21,10 +22,12 @@ body {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+    /* background: #d0e9fc; */
   }
   
   th {
-    background-color: #f2f2f2;
+    background-color: #a0d3fa;
+    /* color: #fff; */
   }
   
   .reject{
