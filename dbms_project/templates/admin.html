@@ -30,8 +30,13 @@
               <tr>
                 <td>{{ supervisor_data.0 }}</td>
                 <td>{{ supervisor_data.1 }}</td>
+                <td>{{ supervisor_data.2 }}</td>
                 <td>
-                    <button class="reject">Remove</button>
+                    <button class="reject">
+                      <a href="http://localhost:8000/delete/{{supervisor_data.0}}/">
+                        Remove
+                      </a>  
+                    </button>
               </tr>
               {% endfor %}
             </tbody>
@@ -60,8 +65,16 @@
             <td>{{ voter_data.Contact_Number }}</td>
             <td>{{ voter_data.Constituency_Name }}</td>
             <td>
-                <button class="reject">Reject</button>
-                <button class="approve">Approve</button>
+                <button class="reject">
+                  <a href="http://localhost:8000/reject_voter/{{ voter_data.Voter_Card_Number}}">
+                    Reject
+                  </a>
+                </button>
+                <button class="approve">
+                  <a href="http://localhost:8000/approve_voter/{{ voter_data.Voter_Card_Number }}">
+                    Approve
+                  </a>
+                </button>
             </td>
           </tr>
           {% endfor %}
@@ -69,5 +82,6 @@
       </table>
     </div>
 </div>
+
 </body>
 </html>
