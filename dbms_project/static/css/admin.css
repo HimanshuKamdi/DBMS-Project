@@ -1,5 +1,5 @@
 body {
-     background-image: url("./new-bg.png"); 
+     /* background-image: url("../images/new-bg.png");  */
     background-size: cover ;
     background-position: center;
     background-repeat: no-repeat; 
@@ -11,6 +11,11 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center; 
+    flex-wrap: wrap;
+  }
+
+  .voter_table, .supervisor_table, .candidate_table{
+    width: 40%
   }
 
   table {
@@ -24,10 +29,31 @@ body {
     padding: 8px;
     /* background: #d0e9fc; */
   }
+
+  .add_super, .add_candidate{
+    padding:10px;
+    border:none;
+    border-radius:5px;
+    background-color: #7CFC00;
+    margin: 20px;
+  }
+
+  .add_super a,.add_candidate a {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  td button a{
+    text-decoration: none;
+    color: white;
+  }
   
   th {
     background-color: #a0d3fa;
-    /* color: #fff; */
+  }
+
+  .supervisor_table{
+    text-align: center;
   }
   
   .reject{

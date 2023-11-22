@@ -19,8 +19,16 @@
     <div class="infoContainer">
       <form method="POST">
         {% csrf_token %}
-        <h1>Fill Your Details</h1>
+        <h1>Fill Supervisor's Details</h1>
         <div class="formContainer">
+            <div class="formDiv" style="transition-delay: 0.2s">
+            <p>USERNAME</p>
+            <input type="text" required="" name="Username"/>
+          </div>
+          <div class="formDiv" style="transition-delay: 0.2s">
+            <p>Password</p>
+            <input type="text" required="" name="Password"/>
+          </div>
           <div class="formDiv" style="transition-delay: 0.2s">
             <p>FIRST NAME</p>
             <input type="text" required="" name="First_Name"/>
@@ -30,22 +38,13 @@
             <input type="text" required="" name="Last_Name"/>
           </div>
           <div class="formDiv" style="transition-delay: 0.4s">
-            <p>CONTACT NUMBER</p>
-            <input type="tel" required="" name="Contact_Number"/>
+            <p>EMAIL</p>
+            <input type="email" required="" name="Email"/>
           </div>
           <div class="formDiv" style="transition-delay: 0.4s">
-            <p>ADDRESS</p>
-            <input type="text" required="" name="Address"></input>
+            <p>Constituency</p>
+            <input type="text" required="" name="Constituency"/>
           </div>
-          <div class="formDiv" style="transition-delay: 0.4s">
-            <p>DATE OF BIRTH</p>
-            <input type="date" required=""  name="D0B"/>
-          </div>
-          <div class="formDiv" style="transition-delay: 0.4s">
-            <p>CITY</p>
-            <input type="text" required="" name="city"/>
-          </div>
-          <div class="formDiv" style="transition-delay: 0.6s">
             <button class="acceptBtn" type="submit">
                 <a>SUBMIT</a>
             </button>
@@ -55,6 +54,7 @@
     </div>
   </div>
 </div>
+<!-- <script  src="./script.js"></script> --> 
 <script>
     setTimeout(function() {
       const infoContainer = document.querySelector('.infoContainer');

@@ -7,7 +7,7 @@
 body {
   background-image: url("../images/bkg.png");
   background-size: cover ;
-  background-position: top;
+  background-position: center;
   background-repeat: no-repeat;
 
 }

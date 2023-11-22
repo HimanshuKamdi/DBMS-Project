@@ -5,6 +5,7 @@ from .forms import RegistrationForm
 from .models import *
 from django.contrib import messages
 import random 
+import datetime
 
 def register(request):
     print("Received request")
@@ -53,8 +54,8 @@ def details(request , voter_id):
         Contact_Number = request.POST.get('Contact_Number')
         Address = request.POST.get('Address')
         Date_of_Birth = request.POST.get('DOB')
+        Date_of_Birth = datetime.strptime(Date_of_Birth, '%Y-%m-%d').date()
         city = request.POST.get('city')
-        print(city) 
         temp = Constituencies.objects.get(City = city)  
         temp_ID = Voters.objects.get(Voter_ID =  voter_id)
         new_voter_details = Voter_Details.objects.create(
@@ -136,10 +137,31 @@ def admin_page(request):
             "Voter_Card_Number":voter_voter_number,
             "Constituency_Name":constituency_name            
         }
-        voters_list.append(details)
-    
-    context = {'list_of_supervisors': list_of_supervisors, 'voters_list': voters_list}  
+        voters_list.append(details)        
 
+    candidates = Candidates.objects.all()
+    candidates_list = []
+    for candidate in candidates:
+        name = candidate.Candidate_Name
+        party_id = candidate.Party_ID
+        party = Parties.objects.get(Party_ID = party_id.Party_ID)
+        party_name = party.Party_Name
+        # constituency_id = Constituencies.objects.get(Constituency_ID = candidate.Constituency_ID)
+        constituency_name= candidate
+        election_year = candidate.Election_Year
+        description = candidate.Candidate_Description
+        details= {
+            "name": name,
+            "party_name": party_name,
+            "constituency_name": constituency_name,
+            "election_year": election_year,
+            "description": description
+        }
+
+        candidates_list.append(details)
+
+
+    context = {'list_of_supervisors': list_of_supervisors, 'voters_list': voters_list, 'candidates_list': candidates_list}  
     return render(request,'admin.html',context)
 
 
@@ -153,7 +175,7 @@ def login_page_admin(request):
             print("Username not exits")
             return redirect('/login/')
         
-        admin = Admins.authenticate_voter(Username, Password) 
+        admin = Admins.authenticate_admin(Username, Password) 
         if admin is None :  
             messages.error(request , "Invalid credentials")
             return redirect('/register/')
@@ -161,10 +183,10 @@ def login_page_admin(request):
  
         else:
             print("Hello") ; 
-            return redirect('/admin_home.html/')
+            return redirect('/admin')
             
         
-    return render(request , 'login.html') 
+    return render(request , 'admin_login.html') 
 
 def profile_page(request,id):
     details = Voter_Details.objects.filter(Voter_ID = id)    
@@ -176,7 +198,7 @@ def delete_supervisor(request , supervisor_id):
     temp = Supervisor.objects.get(Admin_ID = supervisor_id) 
     temp.delete()
 
-    return redirect('/admin/')
+    return redirect('/admin')
 
 
 def approve_voter(request , voter_id):
@@ -197,6 +219,82 @@ def reject_voter(request , voter_id):
 
 
 def home(request, voter_id):
-    details = Voter_Details.objects.get(Voter_ID=voter_id)
-    context={"details":details}
+    voter_details = Voter_Details.objects.get(Voter_ID=voter_id)
+    more_details = Voters.objects.get(Voter_ID=voter_id)
+    # constituency_name=details.Constituency_ID
+    # print(constituency_name)
+    constituency_id=Constituencies.objects.get(City= voter_details.Constituency_ID)
+    # print(constituency_id.Constituency_ID)
+    # candidates=Candidates.objects.filter(Constituency_ID=constituency_id.Constituency_ID)
+    candidates = Candidates.objects.all()
+    candidates_list = []
+    for candidate in candidates:
+        name = candidate.Candidate_Name
+        party_id = candidate.Party_ID
+        party = Parties.objects.get(Party_ID = party_id.Party_ID)
+        party_name = party.Party_Name
+        # constituency_id = Constituencies.objects.get(Constituency_ID = candidate.Constituency_ID)
+        constituency_name= candidate
+        election_year = candidate.Election_Year
+        description = candidate.Candidate_Description
+        details= {
+            "name": name,
+            "party_name": party_name,
+            "constituency_name": constituency_name,
+            "election_year": election_year,
+            "description": description
+        }
+
+        candidates_list.append(details)
+    context={"details":voter_details, "more_details":more_details, "candidates":candidates_list}
     return render(request , 'home.html' , context = context)
+
+def add_supervisor(request):
+    if request.method== "POST":
+        username  = request.POST.get('Username')
+        password = request.POST.get('Password')
+        first_name = request.POST.get('First_Name')
+        last_name =request.POST.get('Last_Name')
+        email =request.POST.get('Email')
+        constituency = request.POST.get('Constituency')
+        new_supervisor_details = Admins.objects.create(
+                Username = username,
+                Password = password,
+                First_Name = first_name,
+                Last_Name = last_name,
+                Email = email,
+                Role = 'Supervisor'
+            )
+        new_supervisor_details.save() 
+        constituency_detail = Constituencies.objects.get(City = constituency) 
+        supervisor = Admins.objects.get(Email = email)
+        new_entry = Supervisor.objects.create(
+            Constituency_ID = constituency_detail,
+            Admin_ID = supervisor
+
+        )
+        new_entry.save()
+
+
+        return redirect('/admin')
+    return render(request,'add_supervisor.html')
+
+def add_candidate(request):
+    if request.method== "POST":
+        name  = request.POST.get('Name')
+        party_name =request.POST.get('Party_Name')
+        constituency = request.POST.get('Constituency')
+        year = request.POST.get('Year')
+        description = request.POST.get('Description')
+        party=Parties.objects.get(Party_Name = party_name)
+        constituency_detail = Constituencies.objects.get(City = constituency) 
+        new_candidate_details = Candidates.objects.create(
+                Candidate_Name = name,
+                Party_ID = party,
+                Constituency_ID = constituency_detail,
+                Election_Year = year,
+                Candidate_Description = description
+            )
+        new_candidate_details.save() 
+        return redirect('/admin')
+    return render(request,'add_candidate.html')

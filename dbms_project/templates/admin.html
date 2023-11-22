@@ -17,37 +17,10 @@
   
 </div>
 <div id="container">
-    <div class="supervisor_table">
-        <h1>Supervisor</h1>
-        <table>
-            <thead>
-              <tr>
-                <th>Supervisor Name</th>
-                <th>Constituency</th>
-                <th>Action</th>                
-              </tr>
-            </thead>
-            <tbody>
-              {% for supervisor_data in list_of_supervisors %}
-              <tr>
-                {% comment %} <td>{{ supervisor_data.0 }}</td> {% endcomment %}
-                <td>{{ supervisor_data.1 }}</td>
-                <td>{{ supervisor_data.2 }}</td>
-                <td>
-                    <button class="reject">
-                      <a href="http://localhost:8000/delete/{{supervisor_data.0}}/">
-                        Remove
-                      </a>  
-                    </button>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-    </div>
       
     <div class="voter_table">
         <h1>Voters</h1>
-    <table>
+      <table>
         <thead>
           <tr>
             <th>First Name</th>
@@ -83,7 +56,76 @@
         </tbody>
       </table>
     </div>
+    <div class="candidate_table">
+      <h1>Candidates</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Party Name</th>
+            <th>Constiuency Name</th>
+            <th>Election Year</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for voter_data in candidates_list %}
+          <tr>
+            <td>{{ voter_data.name }}</td>
+            <td>{{ voter_data.party_name }}</td>
+            <td>{{ voter_data.constituency_name }}</td>
+            <td>{{ voter_data.election_year }}</td>
+            <td>{{ voter_data.description }}</td>
+            <td>
+                <button class="reject">
+                  <a href="http://localhost:8000/reject_voter/{{ voter_data.Voter_Card_Number}}">
+                    Reject
+                  </a>
+                </button>
+                <button class="approve">
+                  <a href="http://localhost:8000/approve_voter/{{ voter_data.Voter_Card_Number }}">
+                    Approve
+                  </a>
+                </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button class="add_candidate"><a href="/add_candidate">Add Candidates</a></button>
+    </div>
+
+<div class="supervisor_table">
+  <h1>Supervisors</h1>
+  <table>
+      <thead>
+        <tr>
+          <th>Supervisor Name</th>
+          <th>Constituency</th>
+          <th>Action</th>                
+        </tr>
+      </thead>
+      <tbody>
+        {% for supervisor_data in list_of_supervisors %}
+        <tr>
+          {% comment %} <td>{{ supervisor_data.0 }}</td> {% endcomment %}
+          <td>{{ supervisor_data.1 }}</td>
+          <td>{{ supervisor_data.2 }}</td>
+          <td>
+              <button class="reject">
+                <a href="http://localhost:8000/delete/{{supervisor_data.0}}/">
+                  Remove
+                </a>  
+              </button>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button class="add_super"><a href="/add_supervisor">Add Supervisor</a></button>
 </div>
+</div>
+
 
 </body>
 </html>

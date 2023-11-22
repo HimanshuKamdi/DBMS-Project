@@ -12,5 +12,7 @@ urlpatterns = [
     path('', login_page, name='login'),
     path('admin/', admin_page, name='admin'),
     path('admin_login', login_page_admin , name = "admin_login"),
-    path('profile', profile_page , name = "profile")
+    path('profile', profile_page , name = "profile"),
+    path('add_supervisor', add_supervisor , name = "add_supervisor"),
+    path('add_candidate', add_candidate , name = "add_candidate")
 ]
