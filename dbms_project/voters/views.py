@@ -5,7 +5,7 @@ from .forms import RegistrationForm
 from .models import *
 from django.contrib import messages
 import random 
-import hashlib
+import datetime
 
 def register(request):
     print("Received request")
@@ -54,6 +54,7 @@ def details(request , voter_id):
         Contact_Number = request.POST.get('Contact_Number')
         Address = request.POST.get('Address')
         Date_of_Birth = request.POST.get('DOB')
+        Date_of_Birth = datetime.strptime(Date_of_Birth, '%Y-%m-%d').date()
         city = request.POST.get('city')
         temp = Constituencies.objects.get(City = city)  
         temp_ID = Voters.objects.get(Voter_ID =  voter_id)
@@ -183,10 +184,10 @@ def login_page_admin(request):
  
         else:
             print("Hello") ; 
-            return redirect('/admin/')
+            return redirect('/admin')
             
         
-    return render(request , 'login.html') 
+    return render(request , 'admin_login.html') 
 
 def profile_page(request,id):
     details = Voter_Details.objects.filter(Voter_ID = id)    
@@ -198,7 +199,7 @@ def delete_supervisor(request , supervisor_id):
     temp = Supervisor.objects.get(Admin_ID = supervisor_id) 
     temp.delete()
 
-    return redirect('/admin/')
+    return redirect('/admin')
 
 
 def approve_voter(request , voter_id):
@@ -219,14 +220,34 @@ def reject_voter(request , voter_id):
 
 
 def home(request, voter_id):
-    details = Voter_Details.objects.get(Voter_ID=voter_id)
+    voter_details = Voter_Details.objects.get(Voter_ID=voter_id)
     more_details = Voters.objects.get(Voter_ID=voter_id)
     # constituency_name=details.Constituency_ID
     # print(constituency_name)
-    # constituency_id=Constituencies.objects.get(City= constituency_name)
+    constituency_id=Constituencies.objects.get(City= voter_details.Constituency_ID)
     # print(constituency_id.Constituency_ID)
-    candidates=Candidates.objects.get(Constituency_ID=details.Constituency_ID)
-    context={"details":details, "more_details":more_details, "candidates":candidates}
+    # candidates=Candidates.objects.filter(Constituency_ID=constituency_id.Constituency_ID)
+    candidates = Candidates.objects.all()
+    candidates_list = []
+    for candidate in candidates:
+        name = candidate.Candidate_Name
+        party_id = candidate.Party_ID
+        party = Parties.objects.get(Party_ID = party_id.Party_ID)
+        party_name = party.Party_Name
+        # constituency_id = Constituencies.objects.get(Constituency_ID = candidate.Constituency_ID)
+        constituency_name= candidate
+        election_year = candidate.Election_Year
+        description = candidate.Candidate_Description
+        details= {
+            "name": name,
+            "party_name": party_name,
+            "constituency_name": constituency_name,
+            "election_year": election_year,
+            "description": description
+        }
+
+        candidates_list.append(details)
+    context={"details":voter_details, "more_details":more_details, "candidates":candidates_list}
     return render(request , 'home.html' , context = context)
 
 def add_supervisor(request):
