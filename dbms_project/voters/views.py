@@ -73,8 +73,7 @@ def details(request , voter_id):
 
         return redirect('/') 
         
-            
-        
+
     return render(request , 'details.html') 
 
 
