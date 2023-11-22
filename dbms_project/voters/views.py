@@ -220,7 +220,13 @@ def reject_voter(request , voter_id):
 
 def home(request, voter_id):
     details = Voter_Details.objects.get(Voter_ID=voter_id)
-    context={"details":details}
+    more_details = Voters.objects.get(Voter_ID=voter_id)
+    # constituency_name=details.Constituency_ID
+    # print(constituency_name)
+    # constituency_id=Constituencies.objects.get(City= constituency_name)
+    # print(constituency_id.Constituency_ID)
+    candidates=Candidates.objects.get(Constituency_ID=details.Constituency_ID)
+    context={"details":details, "more_details":more_details, "candidates":candidates}
     return render(request , 'home.html' , context = context)
 
 def add_supervisor(request):

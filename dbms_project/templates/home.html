@@ -19,14 +19,35 @@
 <div id="container">
       
     <div class="voter_table">
-        <h1>Your Deatils</h1>
+        <h1>Your Details</h1>
         <p>Voter Card Number:{{ details.Voter_Card_Number}}</p>
         <p>First Name:{{ details.First_Name}}</p>
         <p>Last Name :{{ details.Last_Name}}</p>
+        <p>Last Name :{{ more_details.Email}}</p>
         <p>DOB:{{ details.Date_of_Birth}}</p>
         <p>Contact_Number:{{details.Contact_Number}}</p>
+        <p>Last_Login: {{more_details.Last_Login}}</p>
+        <p>Registered On: {{more_details.Registration_Date}}</p>
 
-        <p>Candidates</p>
+        <h1>Candidates Of Your Constituency</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Party Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for candidate in candidates_list %}
+            <tr>
+              <td>{{ candidate.name }}</td>
+              <td>{{ candidate.party_name }}</td>
+              <td>{{ candidate.description }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
 
     </div>
 </div>
