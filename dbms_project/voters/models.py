@@ -79,9 +79,6 @@ class Voters(models.Model):
 
     class Meta:
         db_table = 'Voters'
-
-    def __str__(self):
-        return self.Username
     
     def authenticate_voter(username, password):
         try:

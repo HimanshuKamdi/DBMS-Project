@@ -187,8 +187,7 @@ def approve_voter(request , voter_id):
 def reject_voter(request , voter_id):
     temp = Voter_Details.objects.get(Voter_Card_Number = voter_id)
     number = temp.Voter_ID 
-    print(number) 
-    temp = Voters.objects.get(Username = number)
+    temp = Voters.objects.get(Voter_ID = number)
     temp.delete()
 
     return redirect('/admin/')
