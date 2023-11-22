@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import check_password
 class Constituencies(models.Model):
     Constituency_ID = models.AutoField(primary_key=True)
     Constituency_Name = models.CharField(max_length=255)
-    State = models.CharField(max_length=255)
+    City = models.CharField(max_length=255)
 
     class Meta:
         db_table = 'Constituencies'   
