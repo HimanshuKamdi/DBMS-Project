@@ -9,8 +9,7 @@ class Constituencies(models.Model):
     class Meta:
         db_table = 'Constituencies'   
 
-    def __str__(self):
-        return self.Constituency_Name 
+
 
 class Parties(models.Model):
     Party_ID = models.AutoField(primary_key=True)

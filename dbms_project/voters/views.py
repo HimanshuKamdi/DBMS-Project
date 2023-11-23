@@ -150,7 +150,7 @@ def admin_page(request):
         party_id = candidate.Party_ID
         party = Parties.objects.get(Party_ID = party_id.Party_ID)
         party_name = party.Party_Name
-        constituency= Constituencies.objects.get(Constituency_Name = candidate.Constituency_ID)
+        constituency= Constituencies.objects.get(Constituency_ID = candidate.Constituency_ID.Constituency_ID)
         constituency_name= constituency.Constituency_Name 
         election_year = candidate.Election_Year
         description = candidate.Candidate_Description
@@ -226,7 +226,7 @@ def reject_voter(request , voter_id):
 def home(request, voter_id):
     voter_details = Voter_Details.objects.get(Voter_ID=voter_id)
     more_details = Voters.objects.get(Voter_ID=voter_id)
-    constituency_id=Constituencies.objects.get(City= voter_details.Constituency_ID)
+    constituency_id=Constituencies.objects.get(Constituency_ID= voter_details.Constituency_ID.Constituency_ID)
     candidates = Candidates.objects.filter(Constituency_ID=constituency_id.Constituency_ID)
     candidates_list = []
     for candidate in candidates:

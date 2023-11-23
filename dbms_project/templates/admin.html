@@ -66,6 +66,34 @@
         </tbody>
       </table>
     </div>
+    <div class="supervisor_table">
+      <h1>Supervisors</h1>
+      <table>
+          <thead>
+            <tr>
+              <th>Supervisor Name</th>
+              <th>Constituency</th>
+              <th>Action</th>                
+            </tr>
+          </thead>
+          <tbody>
+            {% for supervisor_data in list_of_supervisors %}
+            <tr>
+              {% comment %} <td>{{ supervisor_data.0 }}</td> {% endcomment %}
+              <td>{{ supervisor_data.1 }}</td>
+              <td>{{ supervisor_data.2 }}</td>
+              <td>
+                  <button class="reject">
+                    <a href="http://localhost:8000/delete/{{supervisor_data.0}}/">
+                      Remove
+                    </a>  
+                  </button>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <button class="add_super"><a href="/add_supervisor">Add Supervisor</a></button>
+    </div>
     <div class="candidate_table">
       <h1>Candidates</h1>
       <table>
@@ -101,34 +129,7 @@
       <button class="add_candidate"><a href="/add_candidate">Add Candidates</a></button>
     </div>
 
-<div class="supervisor_table">
-  <h1>Supervisors</h1>
-  <table>
-      <thead>
-        <tr>
-          <th>Supervisor Name</th>
-          <th>Constituency</th>
-          <th>Action</th>                
-        </tr>
-      </thead>
-      <tbody>
-        {% for supervisor_data in list_of_supervisors %}
-        <tr>
-          {% comment %} <td>{{ supervisor_data.0 }}</td> {% endcomment %}
-          <td>{{ supervisor_data.1 }}</td>
-          <td>{{ supervisor_data.2 }}</td>
-          <td>
-              <button class="reject">
-                <a href="http://localhost:8000/delete/{{supervisor_data.0}}/">
-                  Remove
-                </a>  
-              </button>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <button class="add_super"><a href="/add_supervisor">Add Supervisor</a></button>
-</div>
+
 </div>
 
 
