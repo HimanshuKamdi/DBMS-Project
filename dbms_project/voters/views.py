@@ -54,7 +54,8 @@ def details(request , voter_id):
         Contact_Number = request.POST.get('Contact_Number')
         Address = request.POST.get('Address')
         Date_of_Birth = request.POST.get('DOB')
-        Date_of_Birth = datetime.strptime(Date_of_Birth, '%Y-%m-%d').date()
+        # print(Date_of_Birth)
+        # Date_of_Birth = datetime.strptime(Date_of_Birth, '%Y-%m-%d').date()
         city = request.POST.get('city')
         temp = Constituencies.objects.get(City = city)  
         temp_ID = Voters.objects.get(Voter_ID =  voter_id)
@@ -123,6 +124,8 @@ def admin_page(request):
     # constituency_name = Voter_Details.objects.select_related('Constituency_ID').all()
     for voter in voters:
         voter_id = voter.Voter_Card_Number
+        voter_detail = Voters.objects.get(Voter_ID = voter.Voter_ID.Voter_ID)
+        voter_verified = voter_detail.Verified
         voter_firstname = voter.First_Name
         voter_lasttname = voter.Last_Name
         voter_dob = voter.Date_of_Birth
@@ -135,7 +138,8 @@ def admin_page(request):
             "Date_of_Birth":voter_dob,
             "Contact_Number":voter_contact,
             "Voter_Card_Number":voter_voter_number,
-            "Constituency_Name":constituency_name            
+            "Constituency_Name":constituency_name,
+            "Verified":voter_verified            
         }
         voters_list.append(details)        
 

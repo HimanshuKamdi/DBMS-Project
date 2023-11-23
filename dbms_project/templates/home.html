@@ -13,23 +13,30 @@
 
 </head>
 <body>
-<div class="navbar">
-  
-</div>
+  <div class="nav">
+    <div class="logo">
+      <img src="{% static 'images/vote.png' %}" alt="logo">
+    </div>
+    <div class="logout">
+      <button class="logout_btn"><a href="/">Logout</a></button>
+    </div>
+  </div>
 <div id="container">
       
-    <div class="voter_table">
+    <div class="info">
         <h1>Your Details</h1>
-        <p>Voter Card Number:{{ details.Voter_Card_Number}}</p>
-        <p>First Name:{{ details.First_Name}}</p>
-        <p>Last Name :{{ details.Last_Name}}</p>
-        <p>Email :{{ more_details.Email}}</p>
-        <p>DOB:{{ details.Date_of_Birth}}</p>
-        <p>Contact_Number:{{details.Contact_Number}}</p>
+        <p><b>Voter Card Number:</b> &nbsp;&nbsp;{{ details.Voter_Card_Number}}</p>
+        <p><b>First Name:</b> &nbsp;&nbsp;{{ details.First_Name}}</p>
+        <p><b>Last Name :</b> &nbsp;&nbsp;{{ details.Last_Name}}</p>
+        <p><b>Email :</b> &nbsp;&nbsp;{{ more_details.Email}}</p>
+        <p><b>DOB:</b> &nbsp;&nbsp;{{ details.Date_of_Birth}}</p>
+        <p><b>Contact_Number:</b> &nbsp;&nbsp;{{details.Contact_Number}}</p>
         {% comment %} <p>Last_Login: {{more_details.Last_Login}}</p> {% endcomment %}
-        <p>Registered On: {{more_details.Registration_Date}}</p>
+        <p><b>Registered On: </b> &nbsp;&nbsp;{{more_details.Registration_Date}}</p>       
 
-        <h1>Candidates Of Your Constituency</h1>
+    </div>
+    <div class="candidates">
+      <h1>Candidates Of Your Constituency</h1>
         <table>
           <thead>
             <tr>
@@ -50,7 +57,6 @@
             {% endfor %}
           </tbody>
         </table>
-
     </div>
 </div>
 

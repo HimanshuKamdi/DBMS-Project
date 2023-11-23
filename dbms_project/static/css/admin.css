@@ -1,21 +1,71 @@
 body {
-     /* background-image: url("../images/new-bg.png");  */
+     /* background-image: url("../images/bkg.png");  */
     background-size: cover ;
     background-position: center;
     background-repeat: no-repeat; 
     
   }
 
+.nav{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #41a6f4;
+}
+
+.nav .logo img{
+  margin: 10px 30px;
+  height: 50px;
+}
+
+.nav .logout_btn{
+  padding: 10px;
+    background-color: #ff0000;
+    border-radius: 5px;
+    border: none;
+    margin: 20px 30px;
+}
+
+.nav .logout_btn a{
+  text-decoration: none;
+  color: #fff;
+}
+
   #container {
     height: 100vh;
     display: flex;
-    justify-content: space-around;
-    align-items: center; 
+    justify-content: flex-start;
+    align-items: start; 
     flex-wrap: wrap;
   }
 
-  .voter_table, .supervisor_table, .candidate_table{
-    width: 40%
+  .admin{
+    width: 100%;
+  }
+  .admin h1{
+    font-size: 50px;
+    color: black;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .voter_table, .supervisor_table, .candidate_table, .info , .candidates{
+    /* width: 40% */
+    margin-bottom: 40px;
+    margin-left: 80px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+
+  .info , .candidates{
+    margin-top: 60px;    
+  }
+  .info{
+    margin-right: 100px;
+    width: 35%;
   }
 
   table {
@@ -50,6 +100,9 @@ body {
   
   th {
     background-color: #a0d3fa;
+  }
+  td {
+    background-color: #fff;
   }
 
   .supervisor_table{
