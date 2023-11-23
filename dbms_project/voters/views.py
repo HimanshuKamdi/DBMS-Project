@@ -54,8 +54,8 @@ def details(request , voter_id):
         Contact_Number = request.POST.get('Contact_Number')
         Address = request.POST.get('Address')
         Date_of_Birth = request.POST.get('DOB')
-        # print(Date_of_Birth)
         # Date_of_Birth = datetime.strptime(Date_of_Birth, '%Y-%m-%d').date()
+        
         city = request.POST.get('city')
         temp = Constituencies.objects.get(City = city)  
         temp_ID = Voters.objects.get(Voter_ID =  voter_id)
@@ -69,7 +69,6 @@ def details(request , voter_id):
                 Constituency_ID = temp ,
                 Voter_Card_Number = random.randint(1000000000, 9999999999)
 
-                # Verified_By=None
             )
         new_voter_details.save() 
 
@@ -93,7 +92,7 @@ def login_page(request):
         user = Voters.authenticate_voter(Username, Password) 
         if user is None :
             messages.error(request , "Invalid credentials")
-            return redirect('/register/')
+            return redirect('/')
         
  
         else:
@@ -184,7 +183,7 @@ def login_page_admin(request):
         admin = Admins.authenticate_admin(Username, Password) 
         if admin is None :  
             messages.error(request , "Invalid credentials")
-            return redirect('/register/')
+            return redirect('/admin_login')
         
  
         else:
@@ -227,19 +226,14 @@ def reject_voter(request , voter_id):
 def home(request, voter_id):
     voter_details = Voter_Details.objects.get(Voter_ID=voter_id)
     more_details = Voters.objects.get(Voter_ID=voter_id)
-    # constituency_name=details.Constituency_ID
-    # print(constituency_name)
     constituency_id=Constituencies.objects.get(City= voter_details.Constituency_ID)
-    # print(constituency_id.Constituency_ID)
-    # candidates=Candidates.objects.filter(Constituency_ID=constituency_id.Constituency_ID)
-    candidates = Candidates.objects.all()
+    candidates = Candidates.objects.filter(Constituency_ID=constituency_id.Constituency_ID)
     candidates_list = []
     for candidate in candidates:
         name = candidate.Candidate_Name
         party_id = candidate.Party_ID
         party = Parties.objects.get(Party_ID = party_id.Party_ID)
         party_name = party.Party_Name
-        # constituency_id = Constituencies.objects.get(Constituency_ID = candidate.Constituency_ID)
         constituency_name= candidate
         election_year = candidate.Election_Year
         description = candidate.Candidate_Description

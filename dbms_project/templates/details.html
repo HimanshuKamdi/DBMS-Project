@@ -39,7 +39,7 @@
           </div>
           <div class="formDiv" style="transition-delay: 0.4s">
             <p>DATE OF BIRTH</p>
-            <input type="date" required=""  name="D0B"/>
+            <input type="date" required=""  name="D0B" id="DOB"/>
           </div>
           <div class="formDiv" style="transition-delay: 0.4s">
             <p>CITY</p>
@@ -69,6 +69,23 @@
         }, 500);
       }, 500);
     }, 800);
+
+  document.getElementById("DOB").addEventListener("change", function() {
+      var dob = document.getElementById("DOB").value;
+      var today = new Date();
+      var birthDate = new Date(dob);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+      }
+
+      if (age < 18) {
+          alert("Person is under 18 years old.");
+          document.getElementById("DOB").value = "";
+      } 
+  });
 </script>
 </body>
 </html>

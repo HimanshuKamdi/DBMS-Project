@@ -30,7 +30,7 @@
           <tr>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Date of Birth</th>
+            {% comment %} <th>Date of Birth</th> {% endcomment %}
             <th>Contact Number</th>
             <th>Constituency Name</th>
             <th>Action</th>
@@ -41,21 +41,24 @@
           <tr>
             <td>{{ voter_data.First_Name }}</td>
             <td>{{ voter_data.Last_Name }}</td>
-            <td>{{ voter_data.Date_of_Birth }}</td>
+            {% comment %} <td>{{ voter_data.Date_of_Birth }}</td> {% endcomment %}
             <td>{{ voter_data.Contact_Number }}</td>
             <td>{{ voter_data.Constituency_Name }}</td>
             <td>
+              {% if voter_data.Verified == "No" %}
+
                 <button class="reject">
                   <a href="http://localhost:8000/reject_voter/{{ voter_data.Voter_Card_Number}}">
                     Reject
                   </a>
                 </button>
-                {% if voter_data.Verified == "No" %}
                 <button class="approve">
                   <a href="http://localhost:8000/approve_voter/{{ voter_data.Voter_Card_Number }}">
                     Approve
                   </a>
                 </button>
+              {% else %}
+              Verified
                 {% endif %}
             </td>
           </tr>
