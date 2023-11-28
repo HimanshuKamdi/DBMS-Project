@@ -96,7 +96,7 @@ class Voter_Details(models.Model):
     Address = models.TextField()
     Contact_Number = models.CharField(max_length=15)
     Voter_Card_Number = models.CharField(max_length=20)
-    Constituency_ID = models.ForeignKey(Constituencies,on_delete=models.SET_NULL, null=True)
+    Constituency_ID = models.ForeignKey(Constituencies,on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Voter_Details'

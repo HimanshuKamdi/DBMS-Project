@@ -130,7 +130,10 @@ def admin_page(request):
         voter_dob = voter.Date_of_Birth
         voter_contact = voter.Contact_Number
         voter_voter_number = voter.Voter_Card_Number
-        constituency_name = voter.Constituency_ID.Constituency_Name
+        try:
+            constituency_name = voter.Constituency_ID.Constituency_Name
+        except:
+            pass
         details = {
             "First_Name":voter_firstname,
             "Last_Name":voter_lasttname,
@@ -148,8 +151,11 @@ def admin_page(request):
         id = candidate.Candidate_ID 
         name = candidate.Candidate_Name
         party_id = candidate.Party_ID
-        party = Parties.objects.get(Party_ID = party_id.Party_ID)
-        party_name = party.Party_Name
+        try:
+            party = Parties.objects.get(Party_ID = party_id.Party_ID)
+            party_name = party.Party_Name
+        except:
+            party_name= "NULL"
         constituency= Constituencies.objects.get(Constituency_ID = candidate.Constituency_ID.Constituency_ID)
         constituency_name= constituency.Constituency_Name 
         election_year = candidate.Election_Year
@@ -226,14 +232,23 @@ def reject_voter(request , voter_id):
 def home(request, voter_id):
     voter_details = Voter_Details.objects.get(Voter_ID=voter_id)
     more_details = Voters.objects.get(Voter_ID=voter_id)
-    constituency_id=Constituencies.objects.get(Constituency_ID= voter_details.Constituency_ID.Constituency_ID)
-    candidates = Candidates.objects.filter(Constituency_ID=constituency_id.Constituency_ID)
+    try:
+        constituency_id=Constituencies.objects.get(Constituency_ID= voter_details.Constituency_ID.Constituency_ID)
+    except:
+        constituency_id= "NULL"
+    try:
+        candidates = Candidates.objects.filter(Constituency_ID=constituency_id.Constituency_ID)
+    except:
+        candidates = []
     candidates_list = []
     for candidate in candidates:
         name = candidate.Candidate_Name
         party_id = candidate.Party_ID
-        party = Parties.objects.get(Party_ID = party_id.Party_ID)
-        party_name = party.Party_Name
+        try:
+            party = Parties.objects.get(Party_ID = party_id.Party_ID)
+            party_name = party.Party_Name
+        except:
+            party_name= "NULL"
         constituency_name= candidate
         election_year = candidate.Election_Year
         description = candidate.Candidate_Description
